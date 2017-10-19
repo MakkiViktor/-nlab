@@ -15,14 +15,15 @@ class ShaderProgram
 	char infoLog[512];
 	unsigned int shaderProgram;
 	unsigned int shaderComponents[6];
+	char* shaderCode;
 	string tag;
 
 public:
 	ShaderProgram(string tag);
 	void Init();
 	bool AttachShaders();
-	bool addShaderSource(const char* ShaderCode, GLenum shaderType);
-	bool addShaderSourceFile(string fileName, GLenum shaderType);
+	void addShaderSource(const char* ShaderCode, GLenum shaderType);
+	void addShaderSourceFile(string fileName, GLenum shaderType);
 	operator unsigned int() const;
 };
 

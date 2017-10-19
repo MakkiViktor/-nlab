@@ -31,7 +31,7 @@ bool ShaderProgram::AttachShaders()
 	return true;
 }
 
-bool ShaderProgram::addShaderSource(const char * ShaderCode, GLenum shaderType)
+void ShaderProgram::addShaderSource(const char * ShaderCode, GLenum shaderType)
 {
 	shaderComponents[size] = glCreateShader(shaderType);
 	glShaderSource(shaderComponents[size], 1, &ShaderCode, NULL);	
@@ -42,34 +42,26 @@ bool ShaderProgram::addShaderSource(const char * ShaderCode, GLenum shaderType)
 		glGetShaderInfoLog(shaderComponents[size], 512, NULL, infoLog);
 		std::cout << "ERROR:SHADER:COMPILATION FAILED\n" << tag << "\n" << infoLog << std::endl;
 		glDeleteShader(shaderComponents[size]);
-		return false;
 	}
 	size++;
-	return true;
 }
 
-bool ShaderProgram::addShaderSourceFile(string fileName, GLenum shaderType)
+void ShaderProgram::addShaderSourceFile(string fileName, GLenum shaderType)
 {
-	char* shaderCode;
-	std::streampos length;
+	std::string line;
+	std::string code;
 	ifstream file(fileName);
 	//TODO nem optimalis kell a kivételkezelés
 	if (file.is_open()) {
-		file.seekg(0, std::ios::end);
-		length = file.tellg();
-		file.seekg(0, std::ios::beg);
-		shaderCode = new char[(unsigned int) length];
-		file.read(shaderCode, length);
-		addShaderSource(shaderCode, shaderType);
-		delete[] shaderCode;
-		file.close();
+		while (!file.eof()) {
+			std::getline(file, line);
+			code.append(line + "\n");
+		}
+		addShaderSource(code.c_str(), shaderType);
 	}
 	else {
 		std::cout << "ERROR:SHADER:FILE OPEN FAILED\n" << tag;
-		return false;
 	}
-
-	return true;
 }
 
 ShaderProgram::operator unsigned int() const

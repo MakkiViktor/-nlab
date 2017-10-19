@@ -67,7 +67,7 @@ int main() {
 	ShaderProgram shaderProgram("simpleShaderProgram");
 	shaderProgram.Init();
 	shaderProgram.addShaderSourceFile("Simple_vs.glsl", GL_VERTEX_SHADER);
-	shaderProgram.addShaderSource("Simple_fs.glsl", GL_FRAGMENT_SHADER);
+	shaderProgram.addShaderSourceFile("Simple_fs.glsl", GL_FRAGMENT_SHADER);
 	shaderProgram.AttachShaders();
 
 	TriangleGeometry triangle;
