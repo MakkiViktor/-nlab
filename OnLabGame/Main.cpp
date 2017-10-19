@@ -5,25 +5,6 @@
 #include "Geometry.h"
 #include "TriangleGeometry.h"
 
-char* vertexShader = R"(
-#version 330 core
-layout (location = 0) in vec3 aPos;
-
-void main()
-{
-    gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
-}
-)";
-
-char* fragmentShader = R"(
-#version 330 core
-out vec4 FragmentColor;
-
-void main(){
-	FragmentColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);
-}
-)";
-
 //Átméretezés callback
 void frame_buffer_size_callback(GLFWwindow* window, int width, int heigth) {
 	glViewport(0,0,width, heigth);
@@ -65,10 +46,10 @@ int main() {
 
 	//shaderek készítése
 	ShaderProgram shaderProgram("simpleShaderProgram");
-	shaderProgram.Init();
+	shaderProgram.init();
 	shaderProgram.addShaderSourceFile("Simple_vs.glsl", GL_VERTEX_SHADER);
 	shaderProgram.addShaderSourceFile("Simple_fs.glsl", GL_FRAGMENT_SHADER);
-	shaderProgram.AttachShaders();
+	shaderProgram.attachShaders();
 
 	TriangleGeometry triangle;
 	triangle.Init();

@@ -8,9 +8,7 @@ using namespace std;
 
 class TriangleGeometry : Geometry
 {
-	unsigned int vao;
-	unsigned int vbo;
-
+	unsigned int vao, vbo;
 public:
 	TriangleGeometry();
 	void Init();

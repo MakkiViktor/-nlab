@@ -8,12 +8,12 @@
 ShaderProgram::ShaderProgram(string tag):tag(tag){
 }
 
-void ShaderProgram::Init()
+void ShaderProgram::init()
 {
 	shaderProgram = glCreateProgram();
 }
 
-bool ShaderProgram::AttachShaders()
+bool ShaderProgram::attachShaders()
 {
 	for (int i = 0; i < size; i++) {
 		glAttachShader(shaderProgram, shaderComponents[i]);
@@ -22,7 +22,7 @@ bool ShaderProgram::AttachShaders()
 	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
 	if (!success) {
 		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-		std::cout << "ERROR:SHADER:LINKING FAILED\n" << tag << "\n" << infoLog << std::endl;
+		std::cout << "ERROR:SHADER:LINKING FAILED " << tag << " : " << infoLog << std::endl;
 		return false;
 	}
 	for (int i = 0; i < size; i++) {
@@ -62,6 +62,11 @@ void ShaderProgram::addShaderSourceFile(string fileName, GLenum shaderType)
 	else {
 		std::cout << "ERROR:SHADER:FILE OPEN FAILED\n" << tag;
 	}
+}
+
+void ShaderProgram::use()
+{
+	glUseProgram(shaderProgram);
 }
 
 ShaderProgram::operator unsigned int() const
