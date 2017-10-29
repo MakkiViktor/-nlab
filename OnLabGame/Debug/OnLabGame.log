@@ -1,7 +1,16 @@
-﻿  TriangleGeometry.cpp
+﻿  Actor.cpp
+  Generating Code...
+  Compiling...
+  TriangleGeometry.cpp
+  Main.cpp
+  IGameObject.cpp
   Geometry.cpp
+  Game.cpp
   Generating Code...
   Skipping... (no relevant changes detected)
-  Main.cpp
+  ShaderProgram.cpp
+  Material.cpp
+  GameWindow.cpp
+  GameBehaviour.cpp
   OnLabGame.vcxproj -> C:\Users\Makki Viktor\Desktop\VIK\Tanulmanyok\Önálló labor\OnLabGame\Debug\OnLabGame.exe
   OnLabGame.vcxproj -> C:\Users\Makki Viktor\Desktop\VIK\Tanulmanyok\Önálló labor\OnLabGame\Debug\OnLabGame.pdb (Partial PDB)

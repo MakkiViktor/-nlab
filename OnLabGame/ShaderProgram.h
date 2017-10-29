@@ -4,10 +4,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "GameBehaviour.h"
 
 using namespace std;
 
-class ShaderProgram
+class ShaderProgram : public GameBehaviour
 {
 	GLenum shaderType;
 	int size = 0;
@@ -19,8 +20,7 @@ class ShaderProgram
 
 public:
 	ShaderProgram(string tag);
-	void init();
-	bool attachShaders();
+	void init() override;
 	void addShaderSource(const char* ShaderCode, GLenum shaderType);
 	void addShaderSourceFile(string fileName, GLenum shaderType);
 	void use();

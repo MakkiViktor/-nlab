@@ -1,25 +1,15 @@
 #include "TriangleGeometry.h"
 
-TriangleGeometry::TriangleGeometry():Geometry() {
+TriangleGeometry::TriangleGeometry() : Geometry(3){
 }
 
-
-void TriangleGeometry::Init()
+void TriangleGeometry::init()
 {
+	Geometry::init();
 	float vertices[] = {
 		-0.5f, -0.5f, 0.0f,
 		0.5f, -0.5f, 0.0f,
 		0.0f,  0.5f, 0.0f };
-
-	std::cout << &vertices;
-	Geometry::init(3);
 	Geometry::addVertices(&vertices, sizeof(vertices), 3, 0);
-
-}
-
-void TriangleGeometry::Draw(unsigned int shaderProgram)
-{
-	glUseProgram(shaderProgram);
-	Geometry::draw();
 }
 

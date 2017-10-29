@@ -1,7 +1,9 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "Texture.h"
 
-void Texture::init(string ImageFileName) {
+Texture::Texture(string ImageFileName) : ImageFileName(ImageFileName){}
+
+void Texture::init() {
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	

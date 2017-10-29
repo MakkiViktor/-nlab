@@ -1,14 +1,14 @@
 #include "Geometry.h"
 
-void Geometry::init(unsigned int vertexSize){
+Geometry::Geometry(unsigned int vertexSize) : vertexSize(vertexSize){}
+
+void Geometry::init(){
 	this->vertexSize = vertexSize;
 	glGenVertexArrays(1, &vao);
 	glGenBuffers(1, &vbo);
 }
 
 void Geometry::addVertices(const GLvoid * vertices, size_t size, unsigned int dimension, unsigned int location){
-
-	std::cout << &vertices;
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);

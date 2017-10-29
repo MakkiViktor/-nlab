@@ -11,10 +11,6 @@ ShaderProgram::ShaderProgram(string tag):tag(tag){
 void ShaderProgram::init()
 {
 	shaderProgram = glCreateProgram();
-}
-
-bool ShaderProgram::attachShaders()
-{
 	for (int i = 0; i < size; i++) {
 		glAttachShader(shaderProgram, shaderComponents[i]);
 	}
@@ -23,12 +19,10 @@ bool ShaderProgram::attachShaders()
 	if (!success) {
 		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
 		std::cout << "ERROR:SHADER:LINKING FAILED " << tag << " : " << infoLog << std::endl;
-		return false;
 	}
 	for (int i = 0; i < size; i++) {
 		glDeleteShader(shaderComponents[i]);
 	}
-	return true;
 }
 
 void ShaderProgram::addShaderSource(const char * ShaderCode, GLenum shaderType)

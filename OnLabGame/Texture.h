@@ -13,8 +13,10 @@ private:
 	unsigned int texture;
 	unsigned char* imageData;
 	int width, height, nrChannels;
+	string ImageFileName;
 public:
-	void init(string ImageFileName);
+	Texture(string ImageFileName);
+	void init();
 	~Texture();
 };
 

@@ -4,14 +4,12 @@
 #include <iostream>
 #include <vector>
 #include "Geometry.h"
+
 using namespace std;
 
-class TriangleGeometry : Geometry
-{
-	unsigned int vao, vbo;
+class TriangleGeometry : public Geometry {
 public:
 	TriangleGeometry();
-	void Init();
-	void Draw(unsigned int shaderProgram);
+	void init() override;
 };
 

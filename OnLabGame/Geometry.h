@@ -3,6 +3,8 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <vector>
+#include "IDrawable.h"
+#include "IGameObject.h"
 
 using namespace std;
 /*
@@ -19,15 +21,16 @@ vertices(vertices), dimension(dimension), location(location) {}
 */
 
 
-class Geometry
+class Geometry : public IDrawable, public IGameObject
 {
 private:
 	unsigned int vao, vbo;
 	unsigned int vertexSize;
 	//vector<vertex> vertices;
 public:
-	void init(unsigned int vertexSize);
+	Geometry(unsigned int vertexSize);
 	void addVertices(const GLvoid * vertices, size_t size, unsigned int dimension, unsigned int location);
-	void draw();
+	void init() override;
+	void draw() override;
 };
 
