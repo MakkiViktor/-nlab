@@ -13,20 +13,24 @@
 using namespace std;
 
 enum sharedType {
-	MAT4, QUATERNION, VEC3, FLOAT
+	MAT4, VEC3, FLOAT
 };
 
-
 struct sharedUniform {
-	sharedUniform(void* data, sharedType type, string& name) : data(data), type(type), name(name) {}
-	void* data;
+	sharedUniform(float* data, sharedType type, string& name) : data(data), type(type), name(name) {}
+	sharedUniform(const sharedUniform& other) {
+		data = other.data;
+		type = other.type;
+		name = other.name;
+	}
+	float *data;
 	sharedType type;
 	string name;
 };
 
 class ShaderProgram : public IGameObject
 {
-	static vector<sharedUniform> shared;
+	static vector<sharedUniform*> shared;
 	GLenum shaderType;
 	int size = 0;
 	int success;
@@ -42,7 +46,7 @@ public:
 	void addShaderSource(const char* ShaderCode, GLenum shaderType);
 	void addShaderSourceFile(string fileName, GLenum shaderType);
 	static void addSharedUniform(sharedUniform& uniform);
-	void setSharedUniform(string& name, void* data);
+	static void setSharedUniform(string& name, float * data);
 	void use();
 	operator unsigned int() const;
 };

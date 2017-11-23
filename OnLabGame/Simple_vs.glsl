@@ -1,14 +1,11 @@
 #version 330 core
 layout (location = 0) in vec3 aPos;
 
-uniform mat4 S;
-uniform mat4 R;
-uniform mat4 T;
-uniform mat4 V;
-uniform mat4 P;
+uniform mat4 M;
+uniform mat4 VP;
 
 void main()
 {
-	mat4 M = S*R*T;
-    gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0) * M * V * P;
+	mat4 MVP = VP * M;
+    gl_Position = VP * M * vec4(aPos, 1.0f);
 }

@@ -10,12 +10,13 @@ using namespace std;
 
 class Mesh : public IGameObject, public IDrawable
 {
-	Material* material;
-	Geometry* geometry;
+	Material material;
+	Geometry geometry;
 	vector<Mesh*> subMeshes;
 
 public:
 	Mesh(Material& material, Geometry& geometry);
+	Mesh(Mesh& other);
 	void onEndFrame() override;
 	void draw() override;
 	void addSubMesh(Mesh& subMesh);

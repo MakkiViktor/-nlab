@@ -1,23 +1,5 @@
 #include "Game.h"
 
-void Game::recursiveAdd(IGameObject * gob)
-{
-	for each(auto g in gob->getChildren())
-	{
-		recursiveAdd(g);
-		gb->add(g);
-	}
-}
-
-void Game::recursiveRemove(IGameObject * gob)
-{
-	for each (auto g in gob->getChildren())
-	{
-		recursiveRemove(g);
-		gb->remove(g);
-	}
-}
-
 Game::Game(GameWindow& window): window(&window){
 	gb = new GameBehaviour();
 }
@@ -52,12 +34,10 @@ void Game::start(){
 }
 
 void Game::add(IGameObject * gob)
-{
-	recursiveAdd(gob);
+{	
 	gb->add(gob);
 }
 
 void Game::remove(IGameObject * gob) {
-	recursiveRemove(gob);
 	gb->remove(gob);
 }

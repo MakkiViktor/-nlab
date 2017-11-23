@@ -8,6 +8,7 @@ class Material : public IDrawable, public IGameObject
 	ShaderProgram* shader;
 public:
 	Material(ShaderProgram& shader);
+	Material(Material& other);
 	void draw() override;
 };
 

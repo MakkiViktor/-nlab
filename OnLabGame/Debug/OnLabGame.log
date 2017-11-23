@@ -1,4 +1,4 @@
-﻿  Mesh.cpp
+﻿  Main.cpp
 c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\vec3.h(18): warning C4227: anachronism used: qualifiers on reference are ignored
 c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\vec3.h(20): warning C4227: anachronism used: qualifiers on reference are ignored
 c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\vec3.h(23): warning C4227: anachronism used: qualifiers on reference are ignored
@@ -10,13 +10,33 @@ c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgam
 c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\mat4.h(18): warning C4227: anachronism used: qualifiers on reference are ignored
 c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\mat4.h(20): warning C4227: anachronism used: qualifiers on reference are ignored
 c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\mat4.h(22): warning C4227: anachronism used: qualifiers on reference are ignored
-c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\mat4.h(34): warning C4227: anachronism used: qualifiers on reference are ignored
 c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\mat4.h(35): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\mat4.h(36): warning C4227: anachronism used: qualifiers on reference are ignored
 c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\quaternion.h(17): warning C4227: anachronism used: qualifiers on reference are ignored
 c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\quaternion.h(19): warning C4227: anachronism used: qualifiers on reference are ignored
 c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\quaternion.h(22): warning C4227: anachronism used: qualifiers on reference are ignored
 c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\quaternion.h(24): warning C4227: anachronism used: qualifiers on reference are ignored
 c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\quaternion.h(25): warning C4227: anachronism used: qualifiers on reference are ignored
-c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\mesh.cpp(12): warning C4102: 'Actor': unreferenced label
+  Camera3D.cpp
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\vec3.h(18): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\vec3.h(20): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\vec3.h(23): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\vec3.h(24): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\vec3.h(25): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\vec3.h(27): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\vec3.h(30): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\vec3.h(35): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\mat4.h(18): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\mat4.h(20): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\mat4.h(22): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\mat4.h(35): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\mat4.h(36): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\quaternion.h(17): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\quaternion.h(19): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\quaternion.h(22): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\quaternion.h(24): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\quaternion.h(25): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\users\makki viktor\desktop\vik\tanulmanyok\önálló labor\onlabgame\onlabgame\camera3d.cpp(9): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
   OnLabGame.vcxproj -> C:\Users\Makki Viktor\Desktop\VIK\Tanulmanyok\Önálló labor\OnLabGame\Debug\OnLabGame.exe
   OnLabGame.vcxproj -> C:\Users\Makki Viktor\Desktop\VIK\Tanulmanyok\Önálló labor\OnLabGame\Debug\OnLabGame.pdb (Partial PDB)

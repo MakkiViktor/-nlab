@@ -24,11 +24,14 @@ vertices(vertices), dimension(dimension), location(location) {}
 class Geometry : public IDrawable, public IGameObject
 {
 private:
-	unsigned int vao, vbo;
+	unsigned int* vao,* vbo;
 	unsigned int vertexSize;
 	//vector<vertex> vertices;
 public:
 	Geometry(unsigned int vertexSize);
+	Geometry(Geometry& other);
+	Geometry(Geometry&& other);
+	~Geometry();
 	void addVertices(const GLvoid * vertices, size_t size, unsigned int dimension, unsigned int location);
 	void init();
 	void draw() override;

@@ -20,6 +20,7 @@ public:
 	void operator=(Mat4& const other);
 	void operator=(Mat4&& other);
 	Vec4 operator*(Vec4& const v);
+	Mat4 transpose();
 	float& operator()(unsigned int r, unsigned int c);
 	static Mat4 E();
 	static Mat4 Translate(Vec3& t);

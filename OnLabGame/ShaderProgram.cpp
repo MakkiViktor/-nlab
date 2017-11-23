@@ -4,13 +4,19 @@
 #include <iostream>
 #include <fstream>
 
-std::vector<sharedUniform> ShaderProgram::shared;
+std::vector<sharedUniform*> ShaderProgram::shared;
+
+
 
 ShaderProgram::ShaderProgram(string tag):tag(tag){
 }
 
 ShaderProgram::~ShaderProgram()
 {
+	for each (auto s in shared)
+	{
+		delete s;
+	}
 	glDeleteShader(shaderProgram);
 }
 
@@ -29,6 +35,7 @@ void ShaderProgram::init()
 	for (int i = 0; i < size; i++) {
 		glDeleteShader(shaderComponents[i]);
 	}
+	cout << "ShaderProgram::shader succesfully linked " << tag << std::endl;
 }
 
 void ShaderProgram::addShaderSource(const char * ShaderCode, GLenum shaderType)
@@ -44,6 +51,7 @@ void ShaderProgram::addShaderSource(const char * ShaderCode, GLenum shaderType)
 		glDeleteShader(shaderComponents[size]);
 	}
 	size++;
+	cout << "ShaderProgram::shader succesfully added " << tag << std::endl;
 }
 
 void ShaderProgram::addShaderSourceFile(string fileName, GLenum shaderType)
@@ -68,20 +76,20 @@ void ShaderProgram::addSharedUniform(sharedUniform & uniform)
 {
 	for each (auto u in shared)
 	{
-		if (strcmp(u.name.c_str(), uniform.name.c_str()) == 0)
+		if (strcmp(u->name.c_str(), uniform.name.c_str()) == 0)
 			return;
 	}
-	shared.push_back(uniform);
+	shared.push_back(new sharedUniform(uniform));
 }
 
-void ShaderProgram::setSharedUniform(string & name, void * data)
+void ShaderProgram::setSharedUniform(string & name, float * data)
 {
 	for each (auto uniform in shared)
 	{
 		if (data == nullptr)
 			throw exception("ERROR::ShaderProgram::No data to set");
-		if (strcmp(uniform.name.c_str(), name.c_str()) == 0) {
-			uniform.data = data;
+		if (strcmp(uniform->name.c_str(), name.c_str()) == 0) {
+			uniform->data = data;
 			return;
 		}
 	}
@@ -90,35 +98,24 @@ void ShaderProgram::setSharedUniform(string & name, void * data)
 
 void ShaderProgram::use()
 {
-	Mat4* m;
-	Quaternion* q;
-	const float * v;
-	Vec3 * vec;
-	float * f;
+	glUseProgram(shaderProgram);
+
 	for each (auto uniform in shared)
 	{
-		switch (uniform.type) {
+		switch (uniform->type) {
 		case MAT4:
-			m = static_cast<Mat4*>(uniform.data);
-			glUniformMatrix4fv(glGetUniformLocation(shaderProgram, uniform.name.c_str()), 1, GL_FALSE, m->c_mat());
-			break;
-		case QUATERNION: break;
-			q = static_cast<Quaternion*>(uniform.data);
-			v = q->c_q();
-			glUniform4f(glGetUniformLocation(shaderProgram, uniform.name.c_str()), v[0], v[1], v[2], v[3]);
+			glUniformMatrix4fv(glGetUniformLocation(shaderProgram, uniform->name.c_str()), 1, GL_FALSE, uniform->data);
 			break;
 		case VEC3: 
-			vec = static_cast<Vec3*>(uniform.data);
-			glUniform3f(glGetUniformLocation(shaderProgram, uniform.name.c_str()), vec->x(), vec->y(), vec->z());
+			glUniform3f(glGetUniformLocation(shaderProgram,uniform->name.c_str()), uniform->data[0], uniform->data[1], uniform->data[2]);
 			break;
 		case FLOAT: 
-			f = static_cast<float*>(uniform.data);
-			glUniform1f(glGetUniformLocation(shaderProgram, uniform.name.c_str()), *f);
+			glUniform1f(glGetUniformLocation(shaderProgram, uniform->name.c_str()), *uniform->data);
 			break;
 
 		}
 	}
-	glUseProgram(shaderProgram);
+
 }
 
 ShaderProgram::operator unsigned int() const

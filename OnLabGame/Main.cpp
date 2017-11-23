@@ -18,6 +18,10 @@
 
 using namespace std;
 
+//TODO game-nek statikus renderState, shader shareduniformban location ellenõrzés(így csak azok a shaderek kapnak adatot, akik kérnek) 
+//meg kell neki delete változó (ne pazaroljunk erõforrást)
+//Quaternion, Vec3, Mat4, Transform -ot át kell nézni, valahol szivárog
+
 int main() {
 	int WindowWidth(800);
 	int WindowHeight(600);
@@ -30,17 +34,19 @@ int main() {
 	shaderProgram.addShaderSourceFile("Simple_vs.glsl", GL_VERTEX_SHADER);
 	shaderProgram.addShaderSourceFile("Simple_fs.glsl", GL_FRAGMENT_SHADER);
 
+	Transform tcam(Vec3(1, 0.5, 0));
+	Camera3D camera(tcam, WindowWidth, WindowHeight, Vec3(1, 0.5, -1), Vec3(0, 1, 0));
+	game.add(&camera);
+
 	TriangleGeometry triangle;
 	Material material(shaderProgram);
-	Transform transform(Vec3(0,0,-1));
+	Transform transform(Vec3(10,0, -10));
 	Mesh triangleMesh(material, triangle);
 	Actor triActor(transform);
-	triActor.addComponent(triangleMesh);
-	game.add(&triangleMesh);
+	triActor.addComponent(&triangleMesh);
+	game.add(&triActor);
 
-	Transform tcam(Vec3(0, 0, 0));
-	Camera3D camera(tcam, 3.14f, WindowWidth / WindowHeight, Vec3(0, 0, -1), Vec3(0, 1, 0));
-	game.add(&camera);
+
 	game.start();
 }
 

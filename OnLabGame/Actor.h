@@ -11,15 +11,10 @@ using namespace std;
 
 class Actor : public IGameObject
 {
-	static Mat4 S;
-	static Mat4 R;
-	static Mat4 T;
+	static Mat4 M;
 	Transform& trans;
-	vector<IGameObject*> components;
 public:
 	Actor(Transform & trans);
-	void addComponent(IGameObject& component);
-	void addComponents(vector<IGameObject*>& components);
 	Transform& transform();
 	void onEndFrame() override;
 };

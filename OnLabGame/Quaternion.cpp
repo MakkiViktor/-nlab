@@ -5,7 +5,10 @@
 Quaternion::Quaternion()
 {
 	q = new float[4];
-	q[A] = 1;
+	q[A] = 1.0f;
+	q[B] = 0.0f;
+	q[C] = 0.0f;
+	q[D] = 0.0f;
 }
 
 Quaternion::Quaternion(float w, float x, float y, float z):Quaternion()

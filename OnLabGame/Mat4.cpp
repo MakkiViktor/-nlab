@@ -4,6 +4,8 @@
 
 Mat4::Mat4(){
 	m = new float[16];
+	for (int i = 0; i < 16; i++)
+		m[i] = 0.0f;
 }
 
 Mat4::Mat4(float m11, float m12, float m13, float m14,
@@ -72,6 +74,16 @@ Vec4 Mat4::operator*(Vec4& const v) {
 			result[i] = sum(i, j);
 		}
 	}
+	return result;
+}
+
+Mat4 Mat4::transpose()
+{
+	Mat4 result;
+	for(int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++) {
+			result.m[j * 4 + i] = m[i * 4 + j];
+		}
 	return result;
 }
 
@@ -172,3 +184,4 @@ Mat4::operator float*()
 {
 	return m;
 }
+
