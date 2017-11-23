@@ -1,22 +1,26 @@
 #pragma once
 #include <vector>
-#include "IDrawable.h"
 #include "Material.h"
 #include "Geometry.h"
 #include "IGameObject.h"
+#include "Transform.h"
+#include "ShaderProgram.h"
+#include <memory>
 
 using namespace std;
 
-class Actor : public IDrawable, public IGameObject
+class Actor : public IGameObject
 {
-	Material* material;
-	Geometry* geometry;
-	vector<Actor*> subActors;
+	static Mat4 S;
+	static Mat4 R;
+	static Mat4 T;
+	Transform& trans;
+	vector<IGameObject*> components;
 public:
-	Actor(Material& material, Geometry& geometry);
-	void addSubActor(Actor& subActor);
-	void addSubActors(vector<Actor*>& subActors);
+	Actor(Transform & trans);
+	void addComponent(IGameObject& component);
+	void addComponents(vector<IGameObject*>& components);
+	Transform& transform();
 	void onEndFrame() override;
-	void draw() override;
 };
 

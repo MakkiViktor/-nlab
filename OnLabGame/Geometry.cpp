@@ -3,7 +3,6 @@
 Geometry::Geometry(unsigned int vertexSize) : vertexSize(vertexSize){}
 
 void Geometry::init(){
-	this->vertexSize = vertexSize;
 	glGenVertexArrays(1, &vao);
 	glGenBuffers(1, &vbo);
 }

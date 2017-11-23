@@ -7,6 +7,10 @@ public:
 		gobs.push_back(gob);
 	}
 
+	static void remove(GameBehaviour* gob) {
+		gobs.erase(std::remove(gobs.begin(), gobs.end(), gob), gobs.end());
+	}
+
 	static void doFunction(std::function<void(GameBehaviour*)> func) {
 		for each (auto gob in gobs)
 		{
@@ -19,12 +23,15 @@ std::vector<GameBehaviour*> GameObjectContainer::gobs;
 
 GameBehaviour::GameBehaviour()
 {
-	GameBehaviour::add(this);
 }
 
 void GameBehaviour::add(GameBehaviour * gob)
 {
 	GameObjectContainer::add(gob);
+}
+
+void GameBehaviour::remove(GameBehaviour * gob) {
+	GameObjectContainer::remove(gob);
 }
 
 void GameBehaviour::callInit(){

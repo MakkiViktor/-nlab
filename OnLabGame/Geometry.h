@@ -30,7 +30,7 @@ private:
 public:
 	Geometry(unsigned int vertexSize);
 	void addVertices(const GLvoid * vertices, size_t size, unsigned int dimension, unsigned int location);
-	void init() override;
+	void init();
 	void draw() override;
 };
 

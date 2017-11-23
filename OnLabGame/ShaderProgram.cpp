@@ -4,8 +4,14 @@
 #include <iostream>
 #include <fstream>
 
+std::vector<sharedUniform> ShaderProgram::shared;
 
 ShaderProgram::ShaderProgram(string tag):tag(tag){
+}
+
+ShaderProgram::~ShaderProgram()
+{
+	glDeleteShader(shaderProgram);
 }
 
 void ShaderProgram::init()
@@ -58,8 +64,60 @@ void ShaderProgram::addShaderSourceFile(string fileName, GLenum shaderType)
 	}
 }
 
+void ShaderProgram::addSharedUniform(sharedUniform & uniform)
+{
+	for each (auto u in shared)
+	{
+		if (strcmp(u.name.c_str(), uniform.name.c_str()) == 0)
+			return;
+	}
+	shared.push_back(uniform);
+}
+
+void ShaderProgram::setSharedUniform(string & name, void * data)
+{
+	for each (auto uniform in shared)
+	{
+		if (data == nullptr)
+			throw exception("ERROR::ShaderProgram::No data to set");
+		if (strcmp(uniform.name.c_str(), name.c_str()) == 0) {
+			uniform.data = data;
+			return;
+		}
+	}
+	throw exception("ERROR::ShaderProgram::uniform does not exist");
+}
+
 void ShaderProgram::use()
 {
+	Mat4* m;
+	Quaternion* q;
+	const float * v;
+	Vec3 * vec;
+	float * f;
+	for each (auto uniform in shared)
+	{
+		switch (uniform.type) {
+		case MAT4:
+			m = static_cast<Mat4*>(uniform.data);
+			glUniformMatrix4fv(glGetUniformLocation(shaderProgram, uniform.name.c_str()), 1, GL_FALSE, m->c_mat());
+			break;
+		case QUATERNION: break;
+			q = static_cast<Quaternion*>(uniform.data);
+			v = q->c_q();
+			glUniform4f(glGetUniformLocation(shaderProgram, uniform.name.c_str()), v[0], v[1], v[2], v[3]);
+			break;
+		case VEC3: 
+			vec = static_cast<Vec3*>(uniform.data);
+			glUniform3f(glGetUniformLocation(shaderProgram, uniform.name.c_str()), vec->x(), vec->y(), vec->z());
+			break;
+		case FLOAT: 
+			f = static_cast<float*>(uniform.data);
+			glUniform1f(glGetUniformLocation(shaderProgram, uniform.name.c_str()), *f);
+			break;
+
+		}
+	}
 	glUseProgram(shaderProgram);
 }
 

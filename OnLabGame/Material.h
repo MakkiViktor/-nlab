@@ -3,7 +3,7 @@
 #include "IDrawable.h"
 
 
-class Material : public IDrawable
+class Material : public IDrawable, public IGameObject
 {
 	ShaderProgram* shader;
 public:

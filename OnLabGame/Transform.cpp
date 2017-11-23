@@ -1,24 +1,51 @@
 #include "Transform.h"
 
-void Transform::Translate(float x, float y, float z) {
-	position[X] = x;
-	position[Y] = y;
-	position[Z] = z;
+Transform::Transform(Transform & other)
+{
+	s = other.s;
+	pos = other.pos;
+	ori = other.ori;
 }
 
-void Transform::Translate(Vec4& v) {
-	position = position + v;
+Transform::Transform(Vec3& dir) :pos(dir)
+{
+	s = Vec3(1, 1, 1);
+}
+
+void Transform::Translate(float x, float y, float z) {
+	pos[X] += x;
+	pos[Y] += y;
+	pos[Z] += z;
+}
+
+void Transform::Translate(Vec3& v) {
+	pos = pos + v;
 }
 
 void Transform::Rotate(float roll, float pitch, float yaw) {
-	
+	Quaternion qr = Quaternion::Euler(Vec3(1, 0, 0), roll);
+	Quaternion qp = Quaternion::Euler(Vec3(0, 1, 0), pitch);
+	Quaternion qy = Quaternion::Euler(Vec3(0, 0, 1), yaw);
+
+	ori = qr * qp * qy * ori * qy.conjugate() * qp.conjugate() * qr.conjugate();
 }
 
-void Transform::setRotation(float roll, float pitch, float yaw) {
-
+void Transform::Rotate(Quaternion q)
+{
+	ori = q * ori * q.conjugate();
 }
-Vec4& Transform::Position() {
 
+Vec3& Transform::position() {
+	return pos;
 }
-Mat4& M();
+
+Vec3 & Transform::scale()
+{
+	return s;
+}
+
+Quaternion & Transform::orientation()
+{
+	return ori;
+}
 
