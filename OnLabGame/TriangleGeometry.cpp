@@ -15,6 +15,26 @@ void TriangleGeometry::init()
 		10.0f, -10.0f, 0.0f,
 		10.0f,  10.0f, 0.0f,
 		};
-	Geometry::addVertices(&vertices, sizeof(vertices), 3, 0);
+
+	float normals[] = {
+		0.0f, 0.0f, -1.0f,
+		0.0f, 0.0f, -1.0f,
+		0.0f, 0.0f, -1.0f,
+
+		0.0f, 0.0f, -1.0f,
+		0.0f, 0.0f, -1.0f,
+		0.0f, 0.0f, -1.0f
+	};
+
+	Vec3 position;
+	Vec3 normal;
+	for (int i = 0; i < 6; i++) {
+		position = Vec3(vertices[i * 3], vertices[i * 3 + 1], vertices[i * 3 + 2]);
+		normal = Vec3(normals[i * 3], normals[i * 3 + 1], normals[i * 3 + 2]);
+		Geometry::addVertexData(position, normal);
+	}
+
+	Geometry::bufferData();
+
 }
 

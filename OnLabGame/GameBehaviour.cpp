@@ -12,9 +12,9 @@ public:
 	}
 
 	static void doFunction(std::function<void(GameBehaviour*)> func) {
-		for each (auto gob in gobs)
+		for (std::vector<GameBehaviour*>::iterator it = gobs.begin(); it != gobs.end(); ++it)
 		{
-			func(gob);
+			func(*it);
 		}
 	}
 };
@@ -49,5 +49,26 @@ void GameBehaviour::callOnStartFrame(){
 void GameBehaviour::callOnEndFrame(){
 	GameObjectContainer::doFunction([](GameBehaviour* gob) {
 		gob->onEndFrame();
+	});
+}
+
+void GameBehaviour::callDestroy()
+{
+	GameObjectContainer::doFunction([](GameBehaviour* gob) {
+		gob->destroy();
+	});
+}
+
+void GameBehaviour::callOnDrawFrame()
+{
+	GameObjectContainer::doFunction([](GameBehaviour* gob) {
+		gob->onDrawFrame();
+	});
+}
+
+void GameBehaviour::callOnDrawUpdateFrame()
+{
+	GameObjectContainer::doFunction([](GameBehaviour* gob) {
+		gob->onDrawUpdateFrame();
 	});
 }

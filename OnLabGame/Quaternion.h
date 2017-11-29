@@ -23,8 +23,11 @@ public:
 	void operator=(Quaternion&& other);
 	Quaternion operator+(Quaternion& const v);
 	Quaternion operator*(Quaternion& const v);
+	Quaternion operator*(float s);
 	Quaternion conjugate();
-	static Quaternion& Euler(Vec3& axis, float angle);
+	float magnitude();
+	Quaternion normalize();
+	static Quaternion Euler(Vec3& axis, float angle);
 	Mat4 getMatrix();
 	Vec3 vector();
 	const float* c_q();

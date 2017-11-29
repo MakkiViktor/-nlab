@@ -39,12 +39,32 @@ void Geometry::init(){
 	glGenBuffers(1, vbo);
 }
 
-void Geometry::addVertices(const GLvoid * vertices, size_t size, unsigned int dimension, unsigned int location){
+void Geometry::addVertexData(Vec3& position, Vec3& normal){
+	VertexData data;
+	for (int i = 0; i < 3; i++) {
+		data.position[i] = position[i];
+		data.normal[i] = normal[i];
+	}
+	vertex.push_back(data);
+}
+
+void Geometry::bufferData()
+{	
+	vertexSize = vertex.size();
 	glBindVertexArray(*vao);
-	glBindBuffer(GL_ARRAY_BUFFER, *vbo);
-	glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, dimension, GL_FLOAT, GL_FALSE, dimension * sizeof(float), 0);
-	glEnableVertexAttribArray(location);
+	glBindBuffer(GL_ARRAY_BUFFER, *vbo);	
+	// Új Bufferdata-nál nem újat hoz létre, hanem ezt írja felül
+	glBufferData(GL_ARRAY_BUFFER, vertex.size() * sizeof(VertexData), &vertex[0], GL_STATIC_DRAW);	
+
+
+
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	//glEnableVertexAttribArray(2);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (void*)offsetof(VertexData, position));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (void*)offsetof(VertexData, normal));
+	//glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)offsetof(VertexData, texCoord));
 }
 
 void Geometry::draw()
@@ -52,3 +72,5 @@ void Geometry::draw()
 	glBindVertexArray(*vao);
 	glDrawArrays(GL_TRIANGLES, 0, vertexSize);
 }
+
+

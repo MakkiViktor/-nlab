@@ -4,14 +4,6 @@ void frame_buffer_size_callback(GLFWwindow* window, int width, int heigth) {
 	glViewport(0, 0, width, heigth);
 }
 
-// Bemenetek kezelése
-void processInput(GLFWwindow *window) {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-		glfwSetWindowShouldClose(window, true);
-	}
-}
-
-
 GameWindow::GameWindow(unsigned int width, unsigned int height, string windowName)
 	: width(width), height(height), windowName(windowName){}
 
@@ -34,9 +26,12 @@ void GameWindow::init()
 	}
 
 	glfwMakeContextCurrent(window);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glViewport(0, 0, width, height);
+	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
 
-	glfwSetFramebufferSizeCallback(window, frame_buffer_size_callback);
+//	glfwSetFramebufferSizeCallback(window, frame_buffer_size_callback);
 }
 
 void GameWindow::close(){
@@ -48,11 +43,29 @@ int GameWindow::windowShouldClose()
 	return glfwWindowShouldClose(window);
 }
 
-void GameWindow::onStartFrame(){
-	processInput(window);
+void GameWindow::onStartFrame(){	
+	glfwPollEvents();
+	glClearColor(0, 0, 0, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void GameWindow::onEndFrame(){
+void GameWindow::onDrawFrame(){
 	glfwSwapBuffers(window);
-	glfwPollEvents();
+
 }
+
+int GameWindow::Width()
+{
+	return width;
+}
+
+int GameWindow::Height()
+{
+	return height;
+}
+
+GameWindow::operator GLFWwindow*()
+{
+	return window;
+}
+

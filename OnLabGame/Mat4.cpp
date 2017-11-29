@@ -1,7 +1,5 @@
 #include "Mat4.h"
 
-
-
 Mat4::Mat4(){
 	m = new float[16];
 	for (int i = 0; i < 16; i++)
@@ -51,6 +49,8 @@ void Mat4::operator=(Mat4& const other) {
 	}
 }
 void Mat4::operator=(Mat4&& other) {
+	if(m != nullptr)
+		delete[] m;
 	m = other.m;
 	other.m = nullptr;
 }

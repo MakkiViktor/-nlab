@@ -3,12 +3,12 @@
 #include "IDrawable.h"
 #include "Material.h"
 #include "Geometry.h"
-#include "IGameObject.h"
+#include "Actor.h"
 #include "Transform.h"
 
 using namespace std;
 
-class Mesh : public IGameObject, public IDrawable
+class Mesh : public Actor, public IDrawable
 {
 	Material material;
 	Geometry geometry;
@@ -17,7 +17,7 @@ class Mesh : public IGameObject, public IDrawable
 public:
 	Mesh(Material& material, Geometry& geometry);
 	Mesh(Mesh& other);
-	void onEndFrame() override;
+	void onDrawFrame() override;
 	void draw() override;
 	void addSubMesh(Mesh& subMesh);
 	void addSubMeshes(vector<Mesh*>& subMeshes);

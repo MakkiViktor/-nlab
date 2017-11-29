@@ -17,7 +17,7 @@ enum sharedType {
 };
 
 struct sharedUniform {
-	sharedUniform(float* data, sharedType type, string& name) : data(data), type(type), name(name) {}
+	sharedUniform(float* data, sharedType type, string name) : data(data), type(type), name(name) {}
 	sharedUniform(const sharedUniform& other) {
 		data = other.data;
 		type = other.type;
@@ -46,7 +46,8 @@ public:
 	void addShaderSource(const char* ShaderCode, GLenum shaderType);
 	void addShaderSourceFile(string fileName, GLenum shaderType);
 	static void addSharedUniform(sharedUniform& uniform);
-	static void setSharedUniform(string& name, float * data);
+	static void setSharedUniform(string name, float * data);
+	static void removeSharedUniform(string name);
 	void use();
 	operator unsigned int() const;
 };

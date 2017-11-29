@@ -10,6 +10,7 @@ class GameWindow {
 	GLFWwindow* window;
 	unsigned int width;
 	unsigned int height;
+	bool rc = false;
 	string windowName;
 public:
 	GameWindow(unsigned int width, unsigned int height, string windowName);
@@ -18,6 +19,9 @@ public:
 	void close();
 	int windowShouldClose();
 	void onStartFrame();
-	void onEndFrame();
+	void onDrawFrame();
+	int Width();
+	int Height();
+	operator GLFWwindow*();
 };
 

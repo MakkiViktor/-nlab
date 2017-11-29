@@ -1,16 +1,19 @@
 #include "Game.h"
 
-Game::Game(GameWindow& window): window(&window){
-	gb = new GameBehaviour();
+RenderState Game::renderState;
+GameWindow* Game::window;
+Game::Game(GameWindow* window){
+	Game::window = window;
 }
 
-Game::~Game()
+void Game::renderStateUpdate()
 {
-	delete gb;
+	renderState.update();
 }
 
-void Game::init(){
+void Game::init(){	
 	window->init();
+	renderState.init();
 	glewExperimental = GL_TRUE;
 	GLint GlewInitResult = glewInit();
 	if (GLEW_OK != GlewInitResult)
@@ -22,22 +25,52 @@ void Game::init(){
 
 void Game::start(){
 
-	gb->callInit();
+	GameBehaviour::callInit();
+	Timer::start();
 	//Game loop
-	while (!window->windowShouldClose()) {
+	while (!window->windowShouldClose()) {			
 		window->onStartFrame();
-		gb->callOnStartFrame();
-		gb->callOnEndFrame();
-		window->onEndFrame();
+		Input::refresh(window);
+		GameBehaviour::callOnStartFrame();
+		Timer::start();
+		GameBehaviour::callOnDrawUpdateFrame();				
+		GameBehaviour::callOnDrawFrame();
+		window->onDrawFrame();
+		GameBehaviour::callOnEndFrame();
 	}
+	Input::deleteAxes();
 	window->close();
+	GameBehaviour::callDestroy();
 }
 
 void Game::add(IGameObject * gob)
 {	
-	gb->add(gob);
+	GameBehaviour::add(gob);
+	for each (auto var in gob->getComponents())
+	{
+		add(var);
+	}
 }
 
 void Game::remove(IGameObject * gob) {
-	gb->remove(gob);
+	for each (auto var in gob->getComponents())
+	{
+		remove(var);
+	}	
+	GameBehaviour::remove(gob);
+}
+
+void RenderState::init()
+{
+	ShaderProgram::addSharedUniform(sharedUniform(MVP, MAT4, "MVP"));
+	ShaderProgram::addSharedUniform(sharedUniform(M, MAT4, "M"));
+	ShaderProgram::addSharedUniform(sharedUniform(Minv, MAT4, "Minv"));
+}
+
+void RenderState::update()
+{
+	MVP = M*VP;
+	ShaderProgram::setSharedUniform("MVP", MVP);
+	ShaderProgram::setSharedUniform("Minv", Minv);
+	ShaderProgram::setSharedUniform("M", M);
 }

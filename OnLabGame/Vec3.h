@@ -15,25 +15,26 @@ class Vec3
 public:
 	Vec3();
 	Vec3(float x, float y, float z);
-	Vec3(Vec3& const other);
+	Vec3(const Vec3& other);
 	Vec3(Vec3&& other);
-	void operator=(Vec3& const other);
+	void operator=(const Vec3& other);
 	void operator=(Vec3&& other);	
-	float& operator[](unsigned int index);
-	Vec3 operator+(Vec3& const u);
-	Vec3 operator-(Vec3& const u);
-	Vec3 cross(Vec3& const u);
+	//float& operator[](unsigned int index);
+	Vec3 operator+(const Vec3& u);
+	Vec3 operator-(const Vec3& u);
+	Vec3 cross(const Vec3& u);
 	Vec3 operator*(float s);
-	float dot(Vec3& const u);
-	float magnitude();
+	float dot(const Vec3& u);
+	float magnitude() const;
 	Vec3 normalize();
-	float cos(Vec3& const u);
+	float cos(const Vec3& u);
 	float& x();
 	float& y();
 	float& z();
 	// Returns value in radian
-	float alpha(Vec3& const u);
-	ostream& operator<<(ostream& os);
+	float alpha(const Vec3& u);
+	operator float*();
 	~Vec3();
 };
-
+	
+	ostream& operator<<(ostream& os, Vec3& v);

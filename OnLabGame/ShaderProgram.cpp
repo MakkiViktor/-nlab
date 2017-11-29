@@ -31,6 +31,7 @@ void ShaderProgram::init()
 	if (!success) {
 		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
 		std::cout << "ERROR:SHADER:LINKING FAILED " << tag << " : " << infoLog << std::endl;
+		return;
 	}
 	for (int i = 0; i < size; i++) {
 		glDeleteShader(shaderComponents[i]);
@@ -49,6 +50,7 @@ void ShaderProgram::addShaderSource(const char * ShaderCode, GLenum shaderType)
 		glGetShaderInfoLog(shaderComponents[size], 512, NULL, infoLog);
 		std::cout << "ERROR:SHADER:COMPILATION FAILED\n" << tag << "\n" << infoLog << std::endl;
 		glDeleteShader(shaderComponents[size]);
+		return;
 	}
 	size++;
 	cout << "ShaderProgram::shader succesfully added " << tag << std::endl;
@@ -82,13 +84,14 @@ void ShaderProgram::addSharedUniform(sharedUniform & uniform)
 	shared.push_back(new sharedUniform(uniform));
 }
 
-void ShaderProgram::setSharedUniform(string & name, float * data)
+void ShaderProgram::setSharedUniform(string name, float * data)
 {
 	for each (auto uniform in shared)
 	{
 		if (data == nullptr)
 			throw exception("ERROR::ShaderProgram::No data to set");
 		if (strcmp(uniform->name.c_str(), name.c_str()) == 0) {
+			//ez itt pazarolhat?
 			uniform->data = data;
 			return;
 		}
@@ -96,26 +99,39 @@ void ShaderProgram::setSharedUniform(string & name, float * data)
 	throw exception("ERROR::ShaderProgram::uniform does not exist");
 }
 
+void ShaderProgram::removeSharedUniform(string name)
+{
+	for each (auto uniform in shared){
+		if (strcmp(uniform->name.c_str(), name.c_str()) == 0) {
+			shared.erase(std::remove(shared.begin(), shared.end(), uniform), shared.end());
+		}
+	}
+}
+
 void ShaderProgram::use()
 {
 	glUseProgram(shaderProgram);
-
+	int uniformLocation;
 	for each (auto uniform in shared)
 	{
 		switch (uniform->type) {
 		case MAT4:
-			glUniformMatrix4fv(glGetUniformLocation(shaderProgram, uniform->name.c_str()), 1, GL_FALSE, uniform->data);
+			uniformLocation = glGetUniformLocation(shaderProgram, uniform->name.c_str());
+			if (uniformLocation != -1) 
+				glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, uniform->data);
 			break;
 		case VEC3: 
-			glUniform3f(glGetUniformLocation(shaderProgram,uniform->name.c_str()), uniform->data[0], uniform->data[1], uniform->data[2]);
+			uniformLocation = glGetUniformLocation(shaderProgram, uniform->name.c_str());
+			if (uniformLocation != -1)
+				glUniform3f(uniformLocation, uniform->data[0], uniform->data[1], uniform->data[2]);
 			break;
 		case FLOAT: 
-			glUniform1f(glGetUniformLocation(shaderProgram, uniform->name.c_str()), *uniform->data);
+			uniformLocation = glGetUniformLocation(shaderProgram, uniform->name.c_str());
+			if (uniformLocation != -1)
+				glUniform1f(uniformLocation, *uniform->data);
 			break;
-
 		}
 	}
-
 }
 
 ShaderProgram::operator unsigned int() const

@@ -4,18 +4,20 @@
 #include "Geometry.h"
 #include "IGameObject.h"
 #include "Transform.h"
-#include "ShaderProgram.h"
+#include "Game.h"
 #include <memory>
 
 using namespace std;
 
 class Actor : public IGameObject
 {
-	static Mat4 M;
-	Transform& trans;
+	Transform trans;
+protected:
+	void renderStateUpdate();
 public:
-	Actor(Transform & trans);
+	static string TAG;
+	Actor(Transform& trans);
+	Actor();
 	Transform& transform();
-	void onEndFrame() override;
 };
 

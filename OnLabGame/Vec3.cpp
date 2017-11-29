@@ -9,65 +9,67 @@ Vec3::Vec3(float x, float y, float z):Vec3() {
 	v[X] = x; v[Y] = y; v[Z] = z;
 }
 
-Vec3::Vec3(Vec3& const other): Vec3() {
-	v[X] = other[X];
-	v[Y] = other[Y];
-	v[Z] = other[Z];
+Vec3::Vec3(const Vec3& other): Vec3() {
+	v[X] = other.v[X];
+	v[Y] = other.v[Y];
+	v[Z] = other.v[Z];
 }
 Vec3::Vec3(Vec3&& other) {
 	v = other.v;
 	other.v = nullptr;
 }
-void Vec3::operator=(Vec3& const other) {
-	v[X] = other[X];
-	v[Y] = other[Y];
-	v[Z] = other[Z];
+void Vec3::operator=(const Vec3& other) {
+	v[X] = other.v[X];
+	v[Y] = other.v[Y];
+	v[Z] = other.v[Z];
 }
 
 void Vec3::operator=(Vec3&& other) {
+	if (v != nullptr)
+		delete[] v;
 	v = other.v;
 	other.v = nullptr;
 }
 
-float& Vec3::operator[](unsigned int index){
-	return v[index];
-}
+//float& Vec3::operator[](unsigned int index){
+//	return v[index];
+//}
 
-Vec3 Vec3::operator+(Vec3& const u) {
+Vec3 Vec3::operator+(const Vec3& u) {
 	Vec3 result;
-	result[X] = v[X] + u[X];
-	result[Y] = v[Y] + u[Y];
-	result[Z] = v[Z] + u[Z];
+	result.v[X] = v[X] + u.v[X];
+	result.v[Y] = v[Y] + u.v[Y];
+	result.v[Z] = v[Z] + u.v[Z];
 	return result;
 }
-Vec3 Vec3::operator-(Vec3& const u) {
+Vec3 Vec3::operator-(const Vec3& u) {
 	Vec3 result;
-	result[X] = v[X] - u[X];
-	result[Y] = v[Y] - u[Y];
-	result[Z] = v[Z] - u[Z];
+	result.v[X] = v[X] - u.v[X];
+	result.v[Y] = v[Y] - u.v[Y];
+	result.v[Z] = v[Z] - u.v[Z];
 	return result;
 }
-Vec3 Vec3::cross(Vec3& const u) {
+Vec3 Vec3::cross(const Vec3& u) {
 	Vec3 result;
-	result[X] = v[Y] * u[Z] - v[Z] * u[Y];
-	result[Y] = v[Z] * u[X] - v[X] * u[Z];
-	result[Z] = v[X] * u[Y] - v[Y] * u[X];
+	result.v[X] = v[Y] * u.v[Z] - v[Z] * u.v[Y];
+	result.v[Y] = v[Z] * u.v[X] - v[X] * u.v[Z];
+	result.v[Z] = v[X] * u.v[Y] - v[Y] * u.v[X];
 	return result;
 }
 
 Vec3 Vec3::operator*(float s) {
 	Vec3 result;
-	result[X] = v[X] * s;
-	result[Y] = v[Y] * s;
-	result[Z] = v[Z] * s;
+	result.v[X] = v[X] * s;
+	result.v[Y] = v[Y] * s;
+	result.v[Z] = v[Z] * s;
 	return result;
 }
-float Vec3::dot(Vec3& const u) {
-	float result = v[X] * u[X] + v[Y] * u[Y] + v[Z] * u[Z];
+float Vec3::dot(const Vec3& u) {
+	float result = v[X] * u.v[X] + v[Y] * u.v[Y] + v[Z] * u.v[Z];
 	return result;
 }
 
-float Vec3::magnitude() {
+float Vec3::magnitude() const{
 	float result = sqrt(pow(v[X], 2) + pow(v[Y], 2) + pow(v[Z], 2));
 	return result;
 }
@@ -78,7 +80,7 @@ Vec3 Vec3::normalize()
 	return Vec3(v[X] / d, v[Y] / d, v[Z] / d);
 }
 
-float Vec3::cos(Vec3& const u) {
+float Vec3::cos(const Vec3& u) {
 	float cos = dot(u) / magnitude() * u.magnitude();
 	return cos;
 }
@@ -98,17 +100,23 @@ float & Vec3::z()
 	return v[Z];
 }
 
-float Vec3::alpha(Vec3& const u) {
+float Vec3::alpha(const Vec3& u) {
 	return acosf(cos(u));
 }
 
-ostream & Vec3::operator<<(ostream & os){
+Vec3::operator float*()
+{
+	return v;
+}
+
+ostream & operator<<(ostream & os, Vec3& v){
 	os << "(" << v[X] << ", " << v[Y] << ", " << v[Z] << ", " << v[3] << ") ";
 	return os;
 }
 
 Vec3::~Vec3(){
-	delete[] v;
+	if(v != nullptr)
+		delete[] v;
 }
 
 

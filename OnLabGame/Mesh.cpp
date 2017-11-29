@@ -9,7 +9,8 @@ Mesh::Mesh(Material & material, Geometry & geometry) : material(material), geome
 
 Mesh::Mesh(Mesh & const other):Mesh(other.material, other.geometry){}
 
-void Mesh::onEndFrame() {
+void Mesh::onDrawFrame() {
+	Actor::renderStateUpdate();
 	draw();
 }
 
@@ -28,10 +29,11 @@ void Mesh::addSubMeshes(vector<Mesh*>& subMeshes) {
 }
 
 void Mesh::draw()
-{
+{	
+	material.draw();
+	geometry.draw();
 	for each (auto var in subMeshes) {
 		var->draw();
 	}
-	material.draw();
-	geometry.draw();
+
 }

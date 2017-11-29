@@ -16,7 +16,7 @@ Quaternion::Quaternion(float w, float x, float y, float z):Quaternion()
 	q[A] = w; q[B] = x; q[C] = y; q[D] = z;
 }
 
-Quaternion::Quaternion(float w, Vec3 & const v):Quaternion(w, v[B], v[C], v[D]){}
+Quaternion::Quaternion(float w, Vec3 & const v):Quaternion(w, v[0], v[1], v[2]){}
 
 
 Quaternion::~Quaternion()
@@ -25,7 +25,11 @@ Quaternion::~Quaternion()
 		delete[] q;
 }
 
-Quaternion::Quaternion(Quaternion & const other):q(other.q){
+Quaternion::Quaternion(Quaternion & const other){
+	q[A] = other.q[A];
+	q[B] = other.q[B];
+	q[C] = other.q[C];
+	q[D] = other.q[D];
 }
 
 Quaternion::Quaternion(Quaternion && other)
@@ -36,7 +40,10 @@ Quaternion::Quaternion(Quaternion && other)
 
 void Quaternion::operator=(Quaternion & const other)
 {
-	q = other.q;
+	q[A] = other.q[A];
+	q[B] = other.q[B];
+	q[C] = other.q[C];
+	q[D] = other.q[D];
 }
 
 void Quaternion::operator=(Quaternion && other)
@@ -65,12 +72,33 @@ Quaternion Quaternion::operator*(Quaternion & const v)
 	return result;
 }
 
+Quaternion Quaternion::operator*(float s)
+{
+	Quaternion result;
+	result.q[A] = q[A] * s;
+	result.q[B] = q[B] * s;
+	result.q[C] = q[C] * s;
+	result.q[D] = q[D] * s;
+	return result;
+}
+
 Quaternion Quaternion::conjugate()
 {
 	return Quaternion(q[A], -q[B], -q[C], -q[D]);
 }
 
-Quaternion & Quaternion::Euler(Vec3& axis, float angle)
+float Quaternion::magnitude()
+{
+	return sqrt(pow(q[A], 2.0f) + pow(q[B], 2.0f) + pow(q[C], 2.0f) + pow(q[D], 2.0f));
+}
+
+Quaternion Quaternion::normalize()
+{
+	float m = magnitude();
+	return Quaternion(q[A]/m, q[B]/m, q[C]/m, q[D]/m);
+}
+
+Quaternion Quaternion::Euler(Vec3& axis, float angle)
 {
 	return Quaternion(cosf(angle / 2),axis * (-sinf(angle / 2)));
 }

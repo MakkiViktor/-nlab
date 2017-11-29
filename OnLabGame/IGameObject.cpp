@@ -1,37 +1,28 @@
 #include "IGameObject.h"
 
+
+string IGameObject::TAG("IGameObject");
+
 void IGameObject::addComponent(IGameObject* component)
 {
+	component->parent = this;
 	components.push_back(component);
 }
 
-vector<IGameObject*>& IGameObject::getChildren()
+vector<IGameObject*>& IGameObject::getComponents()
 {
 	return components;
 }
 
-void IGameObject::onStartFrame()
+IGameObject * IGameObject::getRoot()
 {
-	for each (auto c in components)
-	{
-		c->onStartFrame();
-	}
+	if(parent == nullptr)
+		return this;
+	return parent->getRoot();
 }
 
-void IGameObject::onEndFrame()
+IGameObject * IGameObject::getParent()
 {
-	for each (auto c in components)
-	{
-		c->onEndFrame();
-	}
+	return parent;
 }
-
-void IGameObject::init()
-{
-	for each (auto c in components)
-	{
-		c->init();
-	}
-}
-
 

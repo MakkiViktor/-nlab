@@ -5,20 +5,24 @@
 #include <vector>
 #include "IDrawable.h"
 #include "IGameObject.h"
+#include "Vec3.h"
 
 using namespace std;
-/*
-egy struktúra, amiben a vertexekhez fontos adatok vannak, még jól jöhet
 
-struct vertex {
-float* vertices = nullptr;
-unsigned int location;
-unsigned int dimension;
 
-vertex(float* vertices, unsigned int dimension, unsigned int location) :
-vertices(vertices), dimension(dimension), location(location) {}
+//egy struktúra, amiben a vertexekhez fontos adatok vannak, még jól jöhet
+
+struct VertexData {
+	float position[3];
+	float normal[3];
+	//VertexData(const VertexData& other){
+	//	position = other.position;
+	//	normal = other.normal;
+	//}
+	//VertexData() {}
+	//float texCoord[2];
 };
-*/
+
 
 
 class Geometry : public IDrawable, public IGameObject
@@ -26,13 +30,14 @@ class Geometry : public IDrawable, public IGameObject
 private:
 	unsigned int* vao,* vbo;
 	unsigned int vertexSize;
-	//vector<vertex> vertices;
+	vector<VertexData> vertex;
 public:
 	Geometry(unsigned int vertexSize);
 	Geometry(Geometry& other);
 	Geometry(Geometry&& other);
 	~Geometry();
-	void addVertices(const GLvoid * vertices, size_t size, unsigned int dimension, unsigned int location);
+	void addVertexData(Vec3& position, Vec3& normal);
+	void bufferData();
 	void init();
 	void draw() override;
 };
