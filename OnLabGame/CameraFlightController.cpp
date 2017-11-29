@@ -29,9 +29,11 @@ void CameraFlightController::onStartFrame()
 	v = (Quaternion::Euler(Vec3(1, 0, 0), (sensivity)* mousey) * Quaternion::Euler(Vec3(0, 1, 0), (sensivity) * mousex) * Quaternion(0, foreward)).vector();
 	camera->Lookat() = transform->position() + v.normalize();
 
-	for (double t = 1.0/fps; t < ellapsed; t += 1.0/fps) {
+	for (int t = 0; t <= ellapsed/(1.0/fps); t ++) {
 		transform->position() = transform->position() + ( dir * (speed/fps)) ;
 		camera->Lookat() = camera->Lookat() + (dir * (speed/fps));
+		if (t > 5)
+			break;
 	}
 
 	

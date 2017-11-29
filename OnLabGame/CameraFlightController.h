@@ -15,7 +15,7 @@ class CameraFlightController : public IGameObject
 public:
 	float speed;
 	int fps;
-	CameraFlightController() :speed(0.5), fps(60), sensivity(10) {}
+	CameraFlightController() :speed(5), fps(60), sensivity(10) {}
 	void init() override;
 	void onStartFrame() override;
 };
